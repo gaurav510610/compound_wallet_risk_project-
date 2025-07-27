@@ -80,7 +80,8 @@ Per wallet, the following behavioral features were engineered:
 ![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/RISK_SCORE.png)
 
 ## Data Visualizations
-- Risk Score Distribution of Wallets
-
+- **Risk Score Distribution of Wallets**
+![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/risk%20score%20distribution%20of%20wallets.png)
+- **Average Transactions per Day by Risk Score**
 
 
