@@ -75,8 +75,12 @@ Per wallet, the following behavioral features were engineered:
   - **Rank 5 → 100** (most risky cluster)
 ## Final Output
 - Wallet-wise risk scores exported to **wallet_risk_scores.csv.**
-- **Output**
+- **Output  example**
 
+![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/RISK_SCORE.png)
+
+## Data Visualizations
+- Risk Score Distribution of Wallets
 
 
 
