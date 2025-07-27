@@ -59,7 +59,7 @@ Per wallet, the following behavioral features were engineered:
 | **active_days**              | Unique days the wallet was active.                            |
 ## Feature Scaling
 - **Method:** Min-Max Normalization.
-- Applied to ensure that features with large values don't dominate clustering.
+- Applied Min-Max Normalization to scale all features between 0 and 1.
 
 ## Clustering & Scoring Method
 - **Algorithm Used:** KMeans Clustering (n_clusters = 5).
@@ -73,6 +73,7 @@ Per wallet, the following behavioral features were engineered:
   - **Rank 3 → 500**
   - **Rank 4 → 250**
   - **Rank 5 → 100** (most risky cluster)
+  - Each wallet was assigned a Risk Score based on the cluster it belonged to.
 ## Final Output
 - Wallet-wise risk scores exported to **wallet_risk_scores.csv.**
 - **Output  example**
@@ -80,8 +81,58 @@ Per wallet, the following behavioral features were engineered:
 ![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/RISK_SCORE.png)
 
 ## Data Visualizations
-- **Risk Score Distribution of Wallets**
+- **Risk Score Distribution of Wallets**:A bar chart showing the number of wallets in each risk score category.
 ![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/risk%20score%20distribution%20of%20wallets.png)
 - **Average Transactions per Day by Risk Score**
+![Alt text](https://github.com/gaurav510610/compound_wallet_risk_project-/blob/main/avg_tx_per_day_by_scor.png)
 
+
+## assignment Resonse Summary
+
+### Data Collection Method
+- **steps involved**
+  - Loaded wallet addresses from a CSV file.
+  - Used Covalent API's /transactions_v2/ endpoint to fetch all historical transactions for each wallet.
+  - Implemented API request handling (with retries for failures).
+  - Combined all transactions into a single CSV file (wallet_transactions_compound.csv) for downstream analysis.
+    
+    
+  ###  Feature engineering and Selection Rationale
+  - Features chosen to reflect wallet behavior, risk, reliability, and engagement.
+
+| Feature                      | Description                                                   |
+| ---------------------------- | ------------------------------------------------------------- |
+| **avg\_tx\_per\_day**        | Average number of transactions per active day.                |
+| **avg\_gas\_spent\_per\_tx** | Average gas spent per transaction.                            |
+| **fees\_paid\_per\_tx**      | Average transaction fees paid per transaction.                |
+| **success\_ratio**           | Ratio of successful transactions to total transactions.       |
+| **destination\_diversity**   | Ratio of unique destination addresses per total transactions. |
+| **avg\_fee\_per\_day**       | Average transaction fees paid per active day.                 |
+| **total_transactions**       | Total number of transactions made.                            |
+| **total_gas_spent**          | Total gas used across all transactions.                       |   
+| **avg_gas_price**            | Average gas price used.                                       |
+| **total_fees_paid**          |  Total fees paid across transactions.                         |
+| **unique_destinations**      | Number of unique recipients.                                  |
+|**total_successful_transaction** | Count of successful transactions.                          |
+| **active_days**              | Unique days the wallet was active.                            | 
+
+- **Activity Indicators:** (avg_tx_per_day, active_days)
+- **Financial Indicators:** (fees_paid_per_tx, avg_fee_per_day, total_gas_spent)
+- **Transaction Efficiency:** (success_ratio)
+-**Behavioral Risk Factors:** (destination_diversity)
+
+ `These features collectively help understand whether a wallet is consistently active, reliable in terms of transaction success, and whether its behavior indicates focus`.  
+
+ ### Scoring Method
+ - Used KMeans clustering on scaled behavioral features.
+ - Ranked clusters using a custom score metric
+ - Scores mapped from 100 (high risk) to 1000 (low risk)
+
+### Justification of Risk Indicators
+-  `success_ratio`: ndicates reliability. Wallets with a high success ratio are more likely to execute transactions properly, showing stable and responsible behavior.
+-  `fees_paid_per_tx`: Reflects willingness to prioritize transaction execution. Paying more gas can suggest higher seriousness and intent in interactions.
+-  `avg_fee_per_day`:it Reflects consistent protocol usage and cost commitment
+-  `destination_diversity`:Very high diversity can imply risky patterns like bot-like behavior
+
+These indicators are chosen to reflect responsible and consistent wallet behavior in interacting with DeFi protocols.
 
